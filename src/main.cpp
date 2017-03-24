@@ -96,18 +96,19 @@ int main(int argc, char* argv[]) {
       // RADAR MEASUREMENT
 
       // read measurements at this timestamp
-      meas_package.sensor_type_ = MeasurementPackage::RADAR;
-      meas_package.raw_measurements_ = VectorXd(3);
-      float ro;
-      float phi;
-      float ro_dot;
-      iss >> ro;
-      iss >> phi;
-      iss >> ro_dot;
-      meas_package.raw_measurements_ << ro, phi, ro_dot;
-      iss >> timestamp;
-      meas_package.timestamp_ = timestamp;
-      measurement_pack_list.push_back(meas_package);
+      // meas_package.sensor_type_ = MeasurementPackage::RADAR;
+      // meas_package.raw_measurements_ = VectorXd(3);
+      // float ro;
+      // float phi;
+      // float ro_dot;
+      // iss >> ro;
+      // iss >> phi;
+      // iss >> ro_dot;
+      // meas_package.raw_measurements_ << ro, phi, ro_dot;
+      // iss >> timestamp;
+      // meas_package.timestamp_ = timestamp;
+      // measurement_pack_list.push_back(meas_package);
+      continue;
     }
 
     // read ground truth data to compare later
@@ -150,6 +151,7 @@ int main(int argc, char* argv[]) {
       out_file_ << measurement_pack_list[k].raw_measurements_(0) << "\t";
       out_file_ << measurement_pack_list[k].raw_measurements_(1) << "\t";
     } else if (measurement_pack_list[k].sensor_type_ == MeasurementPackage::RADAR) {
+      
       // output the estimation in the cartesian coordinates
       float ro = measurement_pack_list[k].raw_measurements_(0);
       float phi = measurement_pack_list[k].raw_measurements_(1);
@@ -165,6 +167,7 @@ int main(int argc, char* argv[]) {
 
     estimations.push_back(fusionEKF.ekf_.x_);
     ground_truth.push_back(gt_pack_list[k].gt_values_);
+
   }
 
   // compute the accuracy (RMSE)
