@@ -71,11 +71,12 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 	//TODO: YOUR CODE HERE 
 	float px2_py2 = px*px + py*py;
 	//check division by zero
-	if (px2_py2 == 0.0)
+	if (fabs(px2_py2) < 0.0001)
 	{
-		Hj << 1, 1, 1, 1,
-		      1, 1, 1, 1,
-		      1, 1, 1, 1;
+		// https://discussions.udacity.com/t/action-on-divide-by-zero-in-jacobian/229082
+		Hj << 0, 0, 0, 0,
+		      1e+9, 1e+9, 0, 0,
+		      0, 0, 0, 0;
 
 		std::cout << "Error division by zero!" << std::endl;
 		return Hj;
