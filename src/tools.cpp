@@ -78,15 +78,16 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 		      1e+9, 1e+9, 0, 0,
 		      0, 0, 0, 0;
 
-		std::cout << "Error division by zero!" << std::endl;
+		//std::cout << "Error division by zero!" << std::endl;
 		return Hj;
 	}
 	//compute the Jacobian matrix
 	float sqrt_px2_py2 = sqrt(px2_py2);
-	float pow_3_2_px2_py2 = pow(px2_py2,3/2);
+	float pow_3_2_px2_py2 = px2_py2 * sqrt_px2_py2;// pow(px2_py2,3/2);
+	
 
-	Hj << px / sqrt_px2_py2, py / sqrt_px2_py2, 0, 0,
-	      -py/px2_py2, px/px2_py2, 0, 0,
+	Hj << (px / sqrt_px2_py2), (py / sqrt_px2_py2), 0, 0,
+	      -(py/px2_py2), (px/px2_py2), 0, 0,
 	      py*(vx*py - vy*px) / pow_3_2_px2_py2, px*(vy*px - vx*py) / pow_3_2_px2_py2, px / sqrt_px2_py2, py / sqrt_px2_py2;
 
 	return Hj;
