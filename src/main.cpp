@@ -82,33 +82,34 @@ int main(int argc, char* argv[]) {
       // LASER MEASUREMENT
 
       // read measurements at this timestamp
-      meas_package.sensor_type_ = MeasurementPackage::LASER;
-      meas_package.raw_measurements_ = VectorXd(2);
-      float x;
-      float y;
-      iss >> x;
-      iss >> y;
-      meas_package.raw_measurements_ << x, y;
-      iss >> timestamp;
-      meas_package.timestamp_ = timestamp;
-      measurement_pack_list.push_back(meas_package);
-    } else if (sensor_type.compare("R") == 0) {
-      // RADAR MEASUREMENT
-
-      // read measurements at this timestamp
-      // meas_package.sensor_type_ = MeasurementPackage::RADAR;
-      // meas_package.raw_measurements_ = VectorXd(3);
-      // float ro;
-      // float phi;
-      // float ro_dot;
-      // iss >> ro;
-      // iss >> phi;
-      // iss >> ro_dot;
-      // meas_package.raw_measurements_ << ro, phi, ro_dot;
+      // meas_package.sensor_type_ = MeasurementPackage::LASER;
+      // meas_package.raw_measurements_ = VectorXd(2);
+      // float x;
+      // float y;
+      // iss >> x;
+      // iss >> y;
+      // meas_package.raw_measurements_ << x, y;
       // iss >> timestamp;
       // meas_package.timestamp_ = timestamp;
       // measurement_pack_list.push_back(meas_package);
       continue;
+    } else if (sensor_type.compare("R") == 0) {
+      // RADAR MEASUREMENT
+
+      // read measurements at this timestamp
+      meas_package.sensor_type_ = MeasurementPackage::RADAR;
+      meas_package.raw_measurements_ = VectorXd(3);
+      float ro;
+      float phi;
+      float ro_dot;
+      iss >> ro;
+      iss >> phi;
+      iss >> ro_dot;
+      meas_package.raw_measurements_ << ro, phi, ro_dot;
+      iss >> timestamp;
+      meas_package.timestamp_ = timestamp;
+      measurement_pack_list.push_back(meas_package);
+      // continue;
     }
 
     // read ground truth data to compare later
